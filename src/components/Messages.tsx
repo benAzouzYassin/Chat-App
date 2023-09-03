@@ -1,4 +1,4 @@
-import { Message } from "../pages/Chat"
+import { Message } from "../pages/Chat2"
 import { v4 as uuidv4 } from 'uuid';
 type Props = {
     messages: Message[]
