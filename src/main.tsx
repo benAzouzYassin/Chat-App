@@ -10,6 +10,7 @@ import {
 import Login from './pages/Login.tsx';
 import Chat2 from './pages/Chat2.tsx';
 import Chat from './pages/Chat.tsx';
+import Register from './pages/Register.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,14 +20,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-  }, {
-    path: "/chat2",
-    element: <Chat2 />,
   },
   {
     path: "/chat",
     element: <Chat />,
-  },
+  }, {
+    path: "/register",
+    element: <Register />
+  }
 ]);
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

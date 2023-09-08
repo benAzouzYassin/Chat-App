@@ -1,10 +1,11 @@
 import SidebarItem from "./SidebarItem";
-import { UserData } from "../pages/Chat";
+import { LoggedUser, UserData } from "../pages/Chat";
 import logo from "../assets/logo.png"
 type Props = {
     updateSelected: (newSelectedId: string) => void
     usersData: UserData[],
-    openPopup: () => void
+    openPopup: () => void,
+    loggedUser?: LoggedUser
 }
 
 export default function SideNav(props: Props) {
@@ -23,7 +24,7 @@ export default function SideNav(props: Props) {
 
             {props.usersData.map(user => <SidebarItem {...user} key={user.userId} updateSelected={props.updateSelected} />)}
         </div>
-        <div className="flex text-lg font-semibold pl-5 pt-5 italic ">user:Yassine ben azouz #e9e9e9</div>
+        <div className="flex text-lg font-semibold pl-5 pt-5 italic ">{props.loggedUser?.userName} #{props.loggedUser?.userId}</div>
     </div>
 
 }
