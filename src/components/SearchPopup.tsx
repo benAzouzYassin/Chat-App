@@ -1,22 +1,23 @@
 import { useState } from "react"
-import { UserData } from "../pages/Chat"
-
+import { useContext } from "react"
+import { ConversationsContext } from "../context/ConversationsContext"
 
 type Props = {
     isPopupOpen: boolean,
     closePopup: () => void,
-    addNewUser: (newUser: UserData) => void
-    updateSelected: (newSelectedId: string) => void
 }
 
 export default function SearchPopup(props: Props) {
     const [searchInput, setSearchInput] = useState("")
-
+    const { addNewUser, updateSelectedUser } = useContext(ConversationsContext)
     const handleSearchBtn = () => {
         // this data will come from api
-        props.addNewUser({ isSelected: false, lastMessage: "", lastMessageSender: "", userImg: "", userName: "test", userId: searchInput })
+        addNewUser!({ isSelected: false, lastMessage: "", lastMessageSender: "", userImg: "", userName: searchInput, userId: searchInput })
+
         setSearchInput("")
-        props.updateSelected(searchInput)
+
+        updateSelectedUser!(searchInput)
+
         props.closePopup()
     }
 

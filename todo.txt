@@ -1,9 +1,0 @@
-
-
-evrey us
-
-TODO evrey message should have targetId props
-
-TODO design a data base where every user store info about their chats 
-
-TODO update the ui and the auth system

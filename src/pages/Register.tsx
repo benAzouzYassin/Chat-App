@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { backend } from "../api"
 import { useNavigate } from "react-router-dom"
-//TODO: validate the userName input
 
 export default function Register() {
     const navigate = useNavigate()
@@ -54,8 +53,9 @@ export default function Register() {
                     navigate("/chat")
                 })
                 .catch((err) => {
-                    console.log(err)
-                    setErrorMessage("Network Problem")
+                    const errMsg = err.response.data.message
+
+                    setErrorMessage(errMsg ? errMsg : "Network error")
                     setIsLoading(false)
                 })
             setErrorMessage("")

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { backend } from "../api"
-//TODO: validate the userName input
 
 
 export default function Login() {
