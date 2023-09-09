@@ -5,19 +5,18 @@ import { ConversationsContext } from "../context/ConversationsContext"
 type Props = {
     isPopupOpen: boolean,
     closePopup: () => void,
-    updateSelectedUser: (newSelectedId: string) => void
 }
 
 export default function SearchPopup(props: Props) {
     const [searchInput, setSearchInput] = useState("")
-    const { addNewUser } = useContext(ConversationsContext)
+    const { addNewUser, updateSelectedUser } = useContext(ConversationsContext)
     const handleSearchBtn = () => {
         // this data will come from api
         addNewUser!({ isSelected: false, lastMessage: "", lastMessageSender: "", userImg: "", userName: searchInput, userId: searchInput })
 
         setSearchInput("")
 
-        props.updateSelectedUser!(searchInput)
+        updateSelectedUser!(searchInput)
 
         props.closePopup()
     }

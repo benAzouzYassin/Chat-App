@@ -9,7 +9,6 @@ type Props = {
 
     openPopup: () => void,
     loggedUser?: LoggedUser
-    updateSelectedUser: (selectedUserId: string) => void
 }
 
 export default function SideNav(props: Props) {
@@ -25,7 +24,7 @@ export default function SideNav(props: Props) {
         <div className=" overflow-y-scroll h-[82vh]">
             <button className="w-[97%] mb-1 mx-auto  h-[60px]  flex rounded-xl hover:cursor-pointer  bg-blue-500 hover:bg-blue-400 items-center justify-center mt-2" onClick={props.openPopup}><p className="text-white font-semibold text-5xl mt-[-10px]">+</p> <p className="  ml-1 text-[#f9f8f8] font-semibold italic  text-2xl"> New Message</p></button>
 
-            {conversations && conversations.map(user => <SidebarItem {...user} key={user.userId} updateSelectedUser={props.updateSelectedUser} />)}
+            {conversations && conversations.map(user => <SidebarItem {...user} key={user.userId} />)}
         </div>
         <div className="flex text-lg font-semibold pl-5 pt-5 italic ">{props.loggedUser?.userName} #{props.loggedUser?.userId}</div>
     </div>
