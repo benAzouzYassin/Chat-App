@@ -4,7 +4,8 @@ import Conversation from "../components/Conversation";
 import SearchPopup from "../components/SearchPopup";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../socket";
-
+import { useContext } from "react";
+import { ConversationsContext } from "../context/ConversationsContext"
 export type UserData = {
     isSelected: boolean;
     lastMessage: string;
@@ -20,7 +21,7 @@ export type LoggedUser = {
 }
 
 export default function Chat() {
-
+    const { setConversations } = useContext(ConversationsContext)
     const navigate = useNavigate()
     const [loggedUser, setLoggedUser] = useState<LoggedUser>()
     const [isPopupOpen, setIsPopupOpen] = useState(false)
@@ -50,14 +51,27 @@ export default function Chat() {
     }, [loggedUser])
 
 
+    const updateSelectedUser = (newSelectedId: string) => {
+        setConversations!(oldData => {
+            const newData = oldData.map(user => {
+                if (user.userId == newSelectedId) {
+                    setSelectedUser({ ...user, isSelected: true, isHighlighted: false })
+                    return { ...user, isSelected: true, isHighlighted: false }
+                }
+
+                return { ...user, isSelected: false }
+            })
+            return newData
+        })
+    }
 
 
     const closePopup = () => setIsPopupOpen(false)
     const openPopup = () => setIsPopupOpen(true)
 
     return <main className=" h-[100vh] flex flex-row relative">
-        <SearchPopup isPopupOpen={isPopupOpen} closePopup={closePopup} />
-        <SideNav openPopup={openPopup} loggedUser={loggedUser} />
-        <Conversation />
+        <SearchPopup isPopupOpen={isPopupOpen} closePopup={closePopup} updateSelectedUser={updateSelectedUser} />
+        <SideNav openPopup={openPopup} loggedUser={loggedUser} updateSelectedUser={updateSelectedUser} />
+        <Conversation selectedUser={selectedUser} />
     </main>
 }
