@@ -7,7 +7,9 @@ type ContextType = {
     conversations: UserData[];
     addNewUser?: (newUser: UserData) => void;
     updateSelectedUser?: (userId: string) => void
-    selectedUser?: UserData
+    selectedUser?: UserData;
+    highlightConv?: (id: string) => void;
+    updateConvLastMessage?: (convId: string, lastMessage: string, lastMessageSender: string) => void
 }
 
 export const ConversationsContext = createContext<ContextType>({ conversations: [] })
@@ -30,6 +32,18 @@ export function ConversationsProvider(props: Props) {
             return newData
         })
     }
+
+    const highlightConv = (id: string) => {
+        setConversations(prev => {
+            return prev.map(conv => conv.userId === id ? { ...conv, isHighlighted: true } : { ...conv, isHighlighted: false })
+        })
+    }
+
+
+    const updateConvLastMessage = (convId: string, lastMessage: string, lastMessageSender: string) => {
+        setConversations(prev => prev.map(conv => conv.userId === convId ? { ...conv, lastMessage: lastMessage, lastMessageSender: lastMessageSender } : conv))
+    }
+
     const addNewUser = (newUser: UserData) => {
 
         setConversations(old => {
@@ -43,7 +57,7 @@ export function ConversationsProvider(props: Props) {
     }
 
 
-    return <ConversationsContext.Provider value={{ conversations: conversations, addNewUser: addNewUser, updateSelectedUser: updateSelectedUser, selectedUser: selectedUser, }}>
+    return <ConversationsContext.Provider value={{ conversations: conversations, addNewUser: addNewUser, updateSelectedUser: updateSelectedUser, selectedUser: selectedUser, highlightConv: highlightConv, updateConvLastMessage: updateConvLastMessage }}>
         {props.children}
     </ConversationsContext.Provider>
 }

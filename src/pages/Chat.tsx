@@ -4,6 +4,7 @@ import Conversation from "../components/Conversation";
 import SearchPopup from "../components/SearchPopup";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../socket";
+import { backend } from "../api";
 
 export type UserData = {
     isSelected: boolean;
@@ -17,6 +18,7 @@ export type UserData = {
 export type LoggedUser = {
     userName?: string,
     userId?: string
+    userImg?: string
 }
 
 export default function Chat() {
@@ -24,24 +26,23 @@ export default function Chat() {
     const navigate = useNavigate()
     const [loggedUser, setLoggedUser] = useState<LoggedUser>()
     const [isPopupOpen, setIsPopupOpen] = useState(false)
-    const [selectedUser, setSelectedUser] = useState<UserData | undefined>()
 
     //this will come from api
 
 
     useEffect(() => {
-        const savedUser = JSON.parse(localStorage.getItem("user") ?? "{}")
         const token = localStorage.getItem("token")
-        if (!savedUser || !savedUser.userName || !savedUser.userId || !token) {
+        backend.get(`/userData/${token}`)
+            .then(res => setLoggedUser(res.data))
+            .catch(err => navigate("/login"))
+
+        if (!token) {
             navigate("/login")
-        } else {
-            setLoggedUser(savedUser)
         }
 
     }, [])
     useEffect(() => {
         if (loggedUser?.userId && loggedUser.userName) {
-
             socket.emit("join-room", {
                 roomId: loggedUser?.userId,
                 userName: loggedUser?.userName,

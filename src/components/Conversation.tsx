@@ -9,8 +9,9 @@ import { ReactComponent as StickerIcon } from '../assets/sticker-icon.svg'
 import { useEffect, useState } from "react"
 import ConversationMessages from "./ConversationMessages"
 import { socket } from "../socket"
-import { useContext } from "react"
+import { useContext, useRef } from "react"
 import { ConversationsContext } from "../context/ConversationsContext"
+import { backend } from "../api"
 
 
 
@@ -25,7 +26,10 @@ export type Message = {
 
 
 export default function Conversation() {
-    const { selectedUser, addNewUser, conversations, } = useContext(ConversationsContext)
+
+    const socketsCount = useRef(0)
+
+    const { selectedUser, addNewUser, highlightConv, updateConvLastMessage } = useContext(ConversationsContext)
     const [loggedUser, setLoggedUser] = useState<LoggedUser>({})
     const [messageInput, setMessageInput] = useState("")
     //this will come from api
@@ -33,36 +37,54 @@ export default function Conversation() {
 
     function sendMessage(newMsg: Message) {
         socket.emit("message", newMsg)
+        updateConvLastMessage!(newMsg.receiver ?? "", newMsg.text, "me")
         setMessageInput("")
     }
 
 
     const displayMessage = (newMsg: Message, loggedUserId: string) => {
-
-        if (selectedUser?.userId === newMsg.senderId) {
+        if (selectedUser?.userId === newMsg.senderId || newMsg.senderId === loggedUser.userId) {
             setCurrentConvMessages(old => {
                 if (old.indexOf(newMsg) === -1) return [...old, newMsg]
                 return old
             })
+
+        } else {
+            highlightConv!(newMsg.senderId)
         }
 
         if (newMsg.senderId === loggedUserId) {
+
             return
         }
+        updateConvLastMessage!(newMsg.senderId, newMsg.text, newMsg.senderName)
+        //TODO get new userData from api using his id
         addNewUser!({ isSelected: false, lastMessage: newMsg.text, lastMessageSender: newMsg.senderName, userId: newMsg.senderId, userImg: "", userName: newMsg.senderName, isHighlighted: true })
+        //TODO add the conversation to the logged user with api
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+
+        backend.get(`/userData/${token}`)
+            .then(res => setLoggedUser(res.data))
+            .catch(err => console.error(err))
+
+    }, [])
 
 
     useEffect(() => {
-        const savedUser = JSON.parse(localStorage.getItem("user") ?? "{}")
-        setLoggedUser(savedUser)
+        setCurrentConvMessages([])
+        // TODO make api calls to get the conversation messages
+        socket.removeAllListeners()
         socket.on("chat-message", (socketMsg) => {
-            if (socketMsg.userId != savedUser?.userId) {
-                console.log(`${socketMsg.senderName} sent you ${socketMsg.text}`)
-                displayMessage({ senderName: socketMsg.senderName, messageId: socketMsg.messageId, text: socketMsg.text, senderId: socketMsg.senderId, receiver: socketMsg.receiver }, savedUser.userId)
-            }
+            socketsCount.current = socketsCount.current + 1
+            console.log(`${socketMsg.senderName} sent you ${socketMsg.text}`)
+            displayMessage({ senderName: socketMsg.senderName, messageId: socketMsg.messageId, text: socketMsg.text, senderId: socketMsg.senderId, receiver: socketMsg.receiver }, loggedUser?.userId ?? "")
         })
-    }, [])
+
+    }, [selectedUser])
+
 
     return <div className=" w-full">
         <div className="shadow-sm w-full h-[10vh] flex flex-row  overflow-x-hidden">

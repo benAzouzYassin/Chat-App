@@ -11,16 +11,12 @@ export default function Register() {
     //
     const [isLoading, setIsLoading] = useState(false)
 
-    const protectRoute = () => {
-        const user = JSON.parse(localStorage.getItem("user") ?? "{}")
-        if (user && user.userName && user.userId) {
-            navigate("/chat")
-        }
-    }
-
     useEffect(() => {
-        protectRoute()
+        const token = localStorage.getItem("token")
+        backend.get(`/userData/${token}`)
+            .then(res => navigate("/chat"))
     }, [])
+
 
 
     const handleSubmit = (e: any) => {
@@ -46,9 +42,7 @@ export default function Register() {
                     setErrorMessage("")
 
                     setIsLoading(false)
-                    const user = { userName: res.data.userName, userId: res.data.id }
                     const token = res.data.token
-                    localStorage.setItem("user", JSON.stringify(user))
                     localStorage.setItem("token", token)
                     navigate("/chat")
                 })

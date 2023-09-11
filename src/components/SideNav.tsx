@@ -16,8 +16,9 @@ export default function SideNav(props: Props) {
     return <div className="h-full bg-[#f9f8f8] w-[450px] shadow-xl ">
 
         <div className="w-full  bg-[#f9f8f8] h-[10vh]  flex cursor-pointer shadow-sm  ">
-            <img src={logo} width="auto" height="auto" className=" scale-75" alt="" />
-            <p className="text-5xl font-semibold  italic  text-center pt-5 ">Messanger</p>
+            <div className="w-[70px] bg-red-500 rounded-full h-[70px] ml-3 bg-contain bg-center shadow-md mt-auto mb-auto" style={{ backgroundImage: `url(${props.loggedUser?.userImg})` }}></div>
+
+            <p className="text-3xl font-semibold  italic  text-center pt-5 ml-3">{props.loggedUser?.userName}</p>
         </div>
 
 
