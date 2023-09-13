@@ -1,4 +1,4 @@
-import { LoggedUser, UserData } from "../pages/Chat"
+import { LoggedUser } from "../pages/Chat"
 // @ts-ignore
 import { ReactComponent as AddIcon } from '../assets/add-icon.svg'
 import { ReactComponent as GifIcon } from '../assets/gif-icon.svg'

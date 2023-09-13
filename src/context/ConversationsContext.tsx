@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { UserData } from "../pages/Chat";
+import { backend } from "../api";
 type Props = {
     children: string | JSX.Element | JSX.Element[]
 }
@@ -10,7 +11,9 @@ type ContextType = {
     selectedUser?: UserData;
     highlightConv?: (id: string) => void;
     updateConvLastMessage?: (convId: string, lastMessage: string, lastMessageSender: string) => void
+    fetchSavedConversations?: (token: string) => void
 }
+
 
 export const ConversationsContext = createContext<ContextType>({ conversations: [] })
 
@@ -18,6 +21,7 @@ export function ConversationsProvider(props: Props) {
     const [conversations, setConversations] = useState<UserData[]>([])
     const [selectedUser, setSelectedUser] = useState<UserData | undefined>()
 
+    // const 
 
     const updateSelectedUser = (newSelectedId: string) => {
         setConversations(oldData => {
@@ -56,8 +60,20 @@ export function ConversationsProvider(props: Props) {
         })
     }
 
+    const fetchSavedConversations = (token: string) => {
+        // TODO here you will set the conversations from the api
+        backend.get(`/getUserConversations/${token}`)
+            .then(res => {
+                if (res.data.conversations) {
+                    setConversations(res.data.conversations)
+                    console.log(res.data.conversations)
+                }
+            })
+            .catch(err => console.error(err))
+    }
 
-    return <ConversationsContext.Provider value={{ conversations: conversations, addNewUser: addNewUser, updateSelectedUser: updateSelectedUser, selectedUser: selectedUser, highlightConv: highlightConv, updateConvLastMessage: updateConvLastMessage }}>
+
+    return <ConversationsContext.Provider value={{ conversations: conversations, addNewUser: addNewUser, updateSelectedUser: updateSelectedUser, selectedUser: selectedUser, highlightConv: highlightConv, updateConvLastMessage: updateConvLastMessage, fetchSavedConversations: fetchSavedConversations }}>
         {props.children}
     </ConversationsContext.Provider>
 }
