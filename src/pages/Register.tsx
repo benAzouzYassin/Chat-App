@@ -22,7 +22,6 @@ export default function Register() {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if (password == "" || password.length > 15) {
-            console.log("azeaez")
             setErrorMessage("unvalid password")
         }
         if (userName == "" || userName.length > 15) {

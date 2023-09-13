@@ -61,12 +61,11 @@ export function ConversationsProvider(props: Props) {
     }
 
     const fetchSavedConversations = (token: string) => {
-        // TODO here you will set the conversations from the api
+
         backend.get(`/getUserConversations/${token}`)
             .then(res => {
                 if (res.data.conversations) {
                     setConversations(res.data.conversations)
-                    console.log(res.data.conversations)
                 }
             })
             .catch(err => console.error(err))

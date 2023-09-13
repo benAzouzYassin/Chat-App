@@ -62,6 +62,6 @@ export default function Chat() {
     return <main className=" h-[100vh] flex flex-row relative">
         <SearchPopup isPopupOpen={isPopupOpen} closePopup={closePopup} />
         <SideNav openPopup={openPopup} loggedUser={loggedUser} />
-        <Conversation />
+        <Conversation loggedUser={loggedUser} />
     </main>
 }

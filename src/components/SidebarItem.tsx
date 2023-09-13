@@ -11,7 +11,6 @@ type Props = {
 
 export default function SidebarItem(props: Props) {
     const { updateSelectedUser, } = useContext(ConversationsContext)
-    console.log()
     const bgColor = props.isHighlighted ? "red" : props.isSelected ? "#e9e9e9" : ""
     return <div className="w-full  h-[100px]  border-b-2 hover:bg-[#e9e9e9] hover:cursor-pointer rounded-2xl flex flex-row " style={{ backgroundColor: bgColor }} onClick={() => {
         updateSelectedUser!(props.userId)
