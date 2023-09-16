@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import SideNav from "../components/SideNav";
 import Conversation from "../components/Conversation";
-import SearchPopup from "../components/SearchPopup";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../socket";
 import { backend } from "../api";
@@ -56,12 +55,10 @@ export default function Chat() {
 
 
 
-    const closePopup = () => setIsPopupOpen(false)
-    const openPopup = () => setIsPopupOpen(true)
 
-    return <main className=" h-[100vh] flex flex-row relative">
-        <SearchPopup isPopupOpen={isPopupOpen} closePopup={closePopup} />
-        <SideNav openPopup={openPopup} loggedUser={loggedUser} />
+
+    return <main className=" h-[100vh] flex flex-row relative overflow-hidden">
+        <SideNav loggedUser={loggedUser} />
         <Conversation loggedUser={loggedUser} />
     </main>
 }

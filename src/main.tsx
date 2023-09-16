@@ -1,6 +1,4 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import {
   createBrowserRouter,
@@ -11,11 +9,12 @@ import Login from './pages/Login.tsx';
 import Chat from './pages/Chat.tsx';
 import Register from './pages/Register.tsx';
 import { ConversationsProvider } from './context/ConversationsContext.tsx';
+import Test from './pages/test.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Test />,
   },
   {
     path: "/login",
