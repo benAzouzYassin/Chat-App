@@ -32,8 +32,7 @@ export default function Register() {
             setErrorMessage("the password and the password validation should be the same")
         }
         if (userName.length < 15 && userName.length > 0 && password.length > 0 && password.length < 15 && password === passwordValidation) {
-            //navigate("/chat ")
-            //the api call to the login and the local storage storing
+
             setIsLoading(true)
             backend.post("/signup", { userName: userName, password: password, userImg: "https://scontent.ftun16-1.fna.fbcdn.net/v/t1.6435-9/117313334_768355490388113_5149658742314683385_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=174925&_nc_ohc=gejQinfeDXIAX8CvePK&_nc_ht=scontent.ftun16-1.fna&oh=00_AfC3dLzp1bNFFZbh2xxaLerGCS6g1ZIgs93MxFuFnWKJPw&oe=65229BC7" })
                 .then((res) => {
@@ -43,7 +42,7 @@ export default function Register() {
                     setIsLoading(false)
                     const token = res.data.token
                     localStorage.setItem("token", token)
-                    navigate("/chat")
+                    navigate("/")
                 })
                 .catch((err) => {
                     const errMsg = err.response.data.message

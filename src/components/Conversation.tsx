@@ -141,7 +141,7 @@ export default function Conversation(props: Props) {
         {
             selectedUser &&
             <div className="w-full relative flex mt-5 pr-2" >
-                <SendIcon className="absolute right-20 scale-[60%] hover:scale-[65%] hover:cursor-pointer mt-1" onClick={handleSendBtn} />
+                <SendIcon className="absolute right-10 lg:right-20 scale-[60%] hover:scale-[65%] hover:cursor-pointer mt-1" onClick={handleSendBtn} />
                 <input ref={inputElem} value={messageInput} onChange={e => setMessageInput(e.target.value)} type="text" onKeyDown={handleKeyDown} className="italic  rounded-[19px] h-12 focus:outline-0 border-2 border-black bg-[#f9f7f2]  w-[92%] shadow-xl mx-auto pl-2 text-xl  transition-all" placeholder="Send a message" />
             </div>
         }

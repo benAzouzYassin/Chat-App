@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.loader {
+  width: 150px;
+  height: 150px;
+  border: solid 8px rgb(135, 134, 134);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: loading 0.9s infinite ease;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

@@ -9,19 +9,15 @@ import Login from './pages/Login.tsx';
 import Chat from './pages/Chat.tsx';
 import Register from './pages/Register.tsx';
 import { ConversationsProvider } from './context/ConversationsContext.tsx';
-import Test from './pages/test.tsx';
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Test />,
-  },
+
   {
     path: "/login",
     element: <Login />,
   },
   {
-    path: "/chat",
+    path: "/",
     element: <Chat />,
   },
 

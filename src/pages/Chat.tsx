@@ -57,8 +57,11 @@ export default function Chat() {
 
 
 
-    return <main className=" h-[100vh] flex flex-row relative overflow-hidden">
-        <SideNav loggedUser={loggedUser} />
-        <Conversation loggedUser={loggedUser} />
+    return <main className=" h-[100vh]  ">
+        <div className="sm:flex  hidden flex-row relative overflow-hidden">
+            <SideNav loggedUser={loggedUser} />
+            <Conversation loggedUser={loggedUser} />
+        </div>
+        <div className=" bg-[#FAF7EF] w-[100vw] h-[100vh] flex items-center justify-center sm:hidden text-2xl italic px-2 text-center " >Sorry this screen display is not available. Please try pc version.</div>
     </main>
 }

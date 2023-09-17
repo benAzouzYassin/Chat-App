@@ -34,7 +34,7 @@ export default function SideNav(props: Props) {
     }
 
 
-    return <div className="h-full bg-[#FAF7EF] w-[500px] shadow-2xl ">
+    return <div className="h-full bg-[#FAF7EF]  w-[500px] shadow-2xl ">
 
         <div className="w-full  bg-[#FAF7EF] h-[10vh]  flex ">
             <div className="w-[65px] bg-red-500 rounded-full h-[65px] mt-4 ml-5 bg-contain bg-center shadow-md " style={{ backgroundImage: `url(${props.loggedUser?.userImg})` }}></div>
@@ -48,14 +48,12 @@ export default function SideNav(props: Props) {
 
 
         <div className=" overflow-hidden mx-auto mt-5 w-[95%] border-2 border-black rounded-xl flex flex-col h-[86vh] bg-[#FFFEE0]">
-            {/* <button className="w-[97%] mb-1 mx-auto  h-[60px]  flex rounded-xl hover:cursor-pointer  bg-blue-500 hover:bg-blue-400 items-center justify-center mt-2" onClick={props.openPopup}><p className="text-white font-semibold text-5xl mt-[-10px]">+</p> <p className="  ml-1 text-[#f9f8f8] font-semibold italic  text-2xl"> New Message</p></button> */}
             <div className="  relative flex ">
                 <SearchIcon style={{ opacity: searchInput ? "1" : "0" }} className="transition-opacity duration-300 absolute top-10 right-10 scale-75 ml-auto hover:cursor-pointer hover:scale-[80%] " onClick={handleSearchBtn} />
-                <input type="text" className="my-8 w-[90%] border-[1px] border-black shadow-[2px_4px_3px_0px_rgba(0,0,0,0.4)] rounded-full h-14  mx-auto focus:outline-none text-xl italic pl-4" placeholder="Enter User Id" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+                <input type="text" className="my-8 pr-[30%] w-[90%] border-[1px] border-black shadow-[2px_4px_3px_0px_rgba(0,0,0,0.4)] rounded-full h-14  mx-auto focus:outline-none text-xl italic pl-4" placeholder="Enter User Id" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
             </div>
             {conversations && conversations.map(user => <SidebarItem {...user} key={user.userId} loggedUserId={props.loggedUser?.userId ?? ""} />)}
         </div>
-        {/* <div className="flex text-lg font-semibold pl-5 pt-5 italic ">{props.loggedUser?.userName} #{props.loggedUser?.userId}</div> */}
     </div>
 
 }

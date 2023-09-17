@@ -31,15 +31,14 @@ export default function Login() {
 
         }
         if (userName.length < 15 && userName.length > 0 && password.length > 0 && password.length < 15) {
-            //navigate("/chat ")
-            //the api call to the login and the local storage storing
+
             setIsLoading(true)
             backend.post("/signin", { userName: userName, password: password })
                 .then(res => {
                     setIsLoading(false)
                     const token = res.data.token
                     localStorage.setItem("token", token)
-                    navigate("/chat")
+                    navigate("/")
 
                 })
                 .catch(err => {
